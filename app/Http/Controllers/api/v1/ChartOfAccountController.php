@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Models\ChartOfAccount;
 use App\Repositories\Interfaces\ChartOfAccountRepositoryInterface;
 use App\Requests\ChartOfAccountRequest;
 
@@ -28,7 +29,7 @@ class ChartOfAccountController extends Controller
     public function index()
     {
         try {
-            return responseSuccess($this->repository->all());
+            return responseSuccess($this->repository->chartOfAccountList());
         } catch (Exception $e) {
         	return responseCantProcess($e);
         }

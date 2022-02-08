@@ -18,6 +18,7 @@ class CreateChartOfAccountsTable extends Migration
             $table->string('title', 150);
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->enum('type', ['assets','equity','liability','income','expense']);
+            $table->boolean('last_child')->default(true);
             $table->activitiesBy();
             $table->softDeletes();
             $table->timestamps();

@@ -16,6 +16,7 @@ class ChartOfAccount extends Model
         'title',
         'parent_id',
         'type',
+        'last_child',
         'created_by',
         'updated_by',
         'deleted_by'
@@ -31,5 +32,15 @@ class ChartOfAccount extends Model
     public function chartOfAccounts()
     {
         return $this->hasMany(self::class, 'parent_id', 'id');
+    }
+
+    /*public function parent()
+    {
+        return $this->belongsTo(self::class)->withDefault();
+    }*/
+
+    public function childChartOfAccounts()
+    {
+        return $this->hasMany(self::class, 'parent_id')->with('childChartOfAccounts');
     }
 }
