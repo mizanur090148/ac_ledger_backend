@@ -37,6 +37,9 @@ class User extends Authenticatable implements JWTSubject
         'deleted_at'
     ];
 
+    protected $appends = [
+        'full_name'
+    ];
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -90,5 +93,15 @@ class User extends Authenticatable implements JWTSubject
     public function branch()
     {
         return $this->belongsTo(Branch::class);
+    }
+
+    /**
+     * Get the user's full name.
+     *
+     * @return string
+     */
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->last_name}";
     }
 }
