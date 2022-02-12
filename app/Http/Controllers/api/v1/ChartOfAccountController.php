@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Models\ChartOfAccount;
 use App\Repositories\Interfaces\ChartOfAccountRepositoryInterface;
 use App\Requests\ChartOfAccountRequest;
+use DB;
 
 class ChartOfAccountController extends Controller
 {
@@ -42,9 +42,12 @@ class ChartOfAccountController extends Controller
     public function store(ChartOfAccountRequest $request)
     {
         try {
+            DB::beginTransaction();
             $result = $this->repository->store($request->validated());
+            DB::commit();
             return responseCreated($result);
         } catch (Exception $e) {
+            DB::rollback();
             return responseCantProcess($e);
         }
     }
@@ -71,7 +74,6 @@ class ChartOfAccountController extends Controller
     public function delete($id)
     {
         try {
-
             $this->repository->delete($id);
             return responseDeleted();
         } catch (Exception $e) {
