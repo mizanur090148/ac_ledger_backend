@@ -18,6 +18,7 @@ class Branch extends Model
         'short_form',
         'address_one',
         'address_two',
+        'concerned_person',
         'email',
         'contact_no',
         'created_by',
