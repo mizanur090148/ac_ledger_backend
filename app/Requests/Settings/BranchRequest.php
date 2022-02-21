@@ -46,6 +46,10 @@ class BranchRequest extends FormRequest
                 'nullable',
                 'max:255'
             ],
+            'concerned_person' => [
+                'nullable',
+                'max:255'
+            ],
             'email' => [
                 'required',
                 'max:40'
