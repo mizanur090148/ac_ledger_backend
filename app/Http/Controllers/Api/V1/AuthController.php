@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\api\v1;
+namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\api\BaseController as BaseController;
+use App\Http\Controllers\Api\BaseController as BaseController;
 use Exception;
 use Illuminate\Http\Request;
 use App\Models\User;

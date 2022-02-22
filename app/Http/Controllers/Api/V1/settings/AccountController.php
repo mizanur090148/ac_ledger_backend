@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\api\v1\settings;
+namespace App\Http\Controllers\Api\V1\settings;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\Interfaces\BranchRepositoryInterface;
-use App\Requests\Settings\BranchRequest;
+use App\Repositories\Interfaces\AccountRepositoryInterface;
+use App\Requests\Settings\AccountRequest;
 
-class BranchController extends Controller
+class AccountController extends Controller
 {
     /**
-     * @var BranchRepositoryInterface
+     * @var AccountRepositoryInterface
      */
     protected $repository;
 
     /**
-     * BranchController constructor.
-     * @param BranchRepositoryInterface $repository
+     * AccountController constructor.
+     * @param AccountRepositoryInterface $repository
      */
-    public function __construct(BranchRepositoryInterface $repository)
+    public function __construct(AccountRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }
@@ -35,10 +35,10 @@ class BranchController extends Controller
     }
 
     /**
-     * @param BranchRequest $request
+     * @param AccountRequest $request
      * @return \Illuminate\Http\JsonResponse|\JsonResponse4
      */
-    public function store(BranchRequest $request)
+    public function store(AccountRequest $request)
     {
         try {
             $result = $this->repository->store($request->validated());
@@ -50,10 +50,10 @@ class BranchController extends Controller
 
     /**
      * @param $id
-     * @param BranchRequest $request
+     * @param AccountRequest $request
      * @return \JsonResponse
      */
-    public function update($id, BranchRequest $request)
+    public function update($id, AccountRequest $request)
     {
         try {
             $result = $this->repository->update($id, $request->validated());

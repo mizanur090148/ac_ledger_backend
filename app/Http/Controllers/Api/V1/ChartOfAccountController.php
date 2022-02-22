@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\api\v1\settings;
+namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\Interfaces\CompanyRepositoryInterface;
-use App\Requests\Settings\CompanyRequest;
-use App\Requests\Settings\DeleteRequest;
+use App\Repositories\Interfaces\ChartOfAccountRepositoryInterface;
+use App\Requests\ChartOfAccountRequest;
+use DB;
 
-class CompanyController extends Controller
+class ChartOfAccountController extends Controller
 {
     /**
-     * @var CompanyRepositoryInterface
+     * @var ChartOfAccountRepositoryInterface
      */
     protected $repository;
 
     /**
-     * CompanyController constructor.
-     * @param CompanyRepositoryInterface $repository
+     * ChartOfAccountController constructor.
+     * @param ChartOfAccountRepositoryInterface $repository
      */
-    public function __construct(CompanyRepositoryInterface $repository)
+    public function __construct(ChartOfAccountRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }
@@ -29,32 +29,35 @@ class CompanyController extends Controller
     public function index()
     {
         try {
-            return responseSuccess($this->repository->all());
+            return responseSuccess($this->repository->chartOfAccountList());
         } catch (Exception $e) {
         	return responseCantProcess($e);
         }
     }
 
     /**
-     * @param CompanyRequest $request
+     * @param ChartOfAccountRequest $request
      * @return \Illuminate\Http\JsonResponse|\JsonResponse4
      */
-    public function store(CompanyRequest $request)
+    public function store(ChartOfAccountRequest $request)
     {
         try {
+            DB::beginTransaction();
             $result = $this->repository->store($request->validated());
+            DB::commit();
             return responseCreated($result);
         } catch (Exception $e) {
+            DB::rollback();
             return responseCantProcess($e);
         }
     }
 
     /**
      * @param $id
-     * @param CompanyRequest $request
+     * @param ChartOfAccountRequest $request
      * @return \JsonResponse
      */
-    public function update($id, CompanyRequest $request)
+    public function update($id, ChartOfAccountRequest $request)
     {
         try {
             $result = $this->repository->update($id, $request->validated());
@@ -71,7 +74,6 @@ class CompanyController extends Controller
     public function delete($id)
     {
         try {
-
             $this->repository->delete($id);
             return responseDeleted();
         } catch (Exception $e) {

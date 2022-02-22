@@ -16,6 +16,8 @@ use App\Repositories\Interfaces\AccountRepositoryInterface;
 use App\Repositories\CompanyRepository;
 use App\Repositories\Interfaces\ChartOfAccountRepositoryInterface;
 use App\Repositories\ChartOfAccountRepository;
+use App\Repositories\Interfaces\VoucherRepositoryInterface;
+use App\Repositories\VoucherRepository;
 
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -65,6 +67,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             ChartOfAccountRepositoryInterface::class,
             ChartOfAccountRepository::class
+        );
+        $this->app->bind(
+            VoucherRepositoryInterface::class,
+            VoucherRepository::class
         );
     }
 }

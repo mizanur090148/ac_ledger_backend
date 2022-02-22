@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\api\v1\settings;
+namespace App\Http\Controllers\Api\V1\settings;
 
 use App\Models\Group;
 use Illuminate\Http\Request;
-use App\Http\Controllers\api\v1\BaseController as BaseController;
-use App\Http\Controllers\api\v1\ApiCrudHandler;
+use App\Http\Controllers\Api\V1\BaseController as BaseController;
+use App\Http\Controllers\Api\V1\ApiCrudHandler;
 use App\Requests\Settings\FactoryRequest;
 use App\Requests\Settings\FactoryLogoRequest;
 use App\Models\Factory;

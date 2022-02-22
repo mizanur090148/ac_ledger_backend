@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
-use App\Http\Controllers\api\BaseController as BaseController;
-use App\Http\Controllers\api\ApiCrudHandler;
+use App\Http\Controllers\Api\BaseController as BaseController;
+use App\Http\Controllers\Api\ApiCrudHandler;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Validator;

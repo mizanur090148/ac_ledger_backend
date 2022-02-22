@@ -2,10 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\v1\settings\CompanyController;
-use App\Http\Controllers\api\v1\settings\BranchController;
-use App\Http\Controllers\api\v1\settings\AccountController;
-use App\Http\Controllers\api\v1\ChartOfAccountController;
+use App\Http\Controllers\Api\V1\settings\CompanyController;
+use App\Http\Controllers\Api\V1\settings\BranchController;
+use App\Http\Controllers\Api\V1\settings\AccountController;
+use App\Http\Controllers\Api\V1\ChartOfAccountController;
+use App\Http\Controllers\Api\V1\VoucherController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -58,4 +59,15 @@ Route::group([
     Route::post('/chart-of-accounts', [ChartOfAccountController::class, 'store']);
     Route::patch('/chart-of-accounts/{id}', [ChartOfAccountController::class, 'update']);
     Route::delete('/chart-of-accounts/{id}', [ChartOfAccountController::class, 'delete']);
+});
+
+Route::group([
+    'middleware' => 'api',
+    'namespace' => 'App\Http\Controllers\api\v1',
+
+], function () {
+    Route::get('/vouchers', [VoucherController::class, 'index']);
+    Route::post('/vouchers', [VoucherController::class, 'store']);
+    Route::patch('/vouchers/{id}', [VoucherController::class, 'update']);
+    Route::delete('/vouchers/{id}', [VoucherController::class, 'delete']);
 });

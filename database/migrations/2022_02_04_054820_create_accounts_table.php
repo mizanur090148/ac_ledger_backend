@@ -18,7 +18,7 @@ class CreateAccountsTable extends Migration
             $table->string('ac_name', 60);
             $table->string('ac_code', 50);
             $table->enum('balance_type', ['dr','cr'])->default('dr');
-            $table->double('opening_balance', 16,6)->nullable();
+            $table->double('opening_balance', 16,4)->nullable();
             $table->activitiesBy();
             $table->softDeletes();
             $table->timestamps();
