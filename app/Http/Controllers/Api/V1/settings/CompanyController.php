@@ -29,7 +29,7 @@ class CompanyController extends Controller
     public function index()
     {
         try {
-            return responseSuccess($this->repository->all());
+            return responseSuccess($this->repository->paginate());
         } catch (Exception $e) {
         	return responseCantProcess($e);
         }
