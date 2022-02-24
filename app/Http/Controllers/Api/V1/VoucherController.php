@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Controllers\Api\V1\Services\DropdownService;
 use App\Http\Controllers\Controller;
+use App\Models\Settings\Company;
 use App\Repositories\Interfaces\VoucherRepositoryInterface;
 use App\Requests\VoucherRequest;
 use DB;
-use http\Env\Request;
+use Request;
 
 class VoucherController extends Controller
 {
@@ -104,6 +106,18 @@ class VoucherController extends Controller
             $voucherDetails[$key]['fc_amount'] = $request->fc_amount[$key];
         }
         return $voucherDetails;
+    }
+
+    /**
+     * @param DropdownService $service
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function dropdownData(DropdownService $service)
+    {
+        $companies = $service->dropdownData(Company::class, [], ['id','name']);
+        $result['companies'] = $companies;
+
+        return responseSuccess($result);
     }
 
 }

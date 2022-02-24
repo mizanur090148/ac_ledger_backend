@@ -64,10 +64,10 @@ Route::group([
 Route::group([
     'middleware' => 'api',
     'namespace' => 'App\Http\Controllers\api\v1',
-
 ], function () {
     Route::get('/vouchers', [VoucherController::class, 'index']);
     Route::post('/vouchers', [VoucherController::class, 'store']);
     Route::patch('/vouchers/{id}', [VoucherController::class, 'update']);
     Route::delete('/vouchers/{id}', [VoucherController::class, 'delete']);
+    Route::get('/vouchers/dropdown-data', [VoucherController::class, 'dropdownData']);
 });
