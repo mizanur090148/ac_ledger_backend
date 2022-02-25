@@ -44,11 +44,13 @@ Route::group([
     Route::post('/companies', [CompanyController::class, 'store']);
     Route::patch('/companies/{id}', [CompanyController::class, 'update']);
     Route::delete('/companies/{id}', [CompanyController::class, 'delete']);
+    Route::get('/companies/dropdown', [CompanyController::class, 'dropdown']);
 
     Route::get('/branches', [BranchController::class, 'index']);
     Route::post('/branches', [BranchController::class, 'store']);
     Route::patch('/branches/{id}', [BranchController::class, 'update']);
     Route::delete('/branches/{id}', [BranchController::class, 'delete']);
+    Route::get('/branches/dropdown/{companyId?}', [BranchController::class, 'dropdown']);
 
     Route::get('/accounts', [AccountController::class, 'index']);
     Route::post('/accounts', [AccountController::class, 'store']);

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Api\V1\settings;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\V1\Services\DropdownService;
+use App\Models\Settings\Branch;
 use App\Repositories\Interfaces\BranchRepositoryInterface;
 use App\Requests\Settings\BranchRequest;
+
 
 class BranchController extends Controller
 {
@@ -70,11 +73,25 @@ class BranchController extends Controller
     public function delete($id)
     {
         try {
-
             $this->repository->delete($id);
             return responseDeleted();
         } catch (Exception $e) {
             return responseCantProcess($e);
         }
+    }
+
+    /**
+     * @param $companyId
+     * @param DropdownService $service
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function dropdown($companyId = null, DropdownService $service)
+    {
+        $where = [];
+        if ($companyId) {
+            $where['company_id'] = $companyId;
+        }
+        $branches = $service->dropdownData(Branch::class, $where, ['id','name']);
+        return responseSuccess($branches);
     }
 }

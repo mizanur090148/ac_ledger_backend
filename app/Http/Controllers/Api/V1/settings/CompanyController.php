@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1\settings;
 
+use App\Http\Controllers\Api\V1\Services\DropdownService;
 use App\Http\Controllers\Controller;
+use App\Models\Settings\Company;
 use App\Repositories\Interfaces\CompanyRepositoryInterface;
 use App\Requests\Settings\CompanyRequest;
-use App\Requests\Settings\DeleteRequest;
 
 class CompanyController extends Controller
 {
@@ -77,5 +78,15 @@ class CompanyController extends Controller
         } catch (Exception $e) {
             return responseCantProcess($e);
         }
+    }
+
+    /**
+     * @param DropdownService $service
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function dropdown(DropdownService $service)
+    {
+        $companies = $service->dropdownData(Company::class, [], ['id','name']);
+        return responseSuccess($companies);
     }
 }
