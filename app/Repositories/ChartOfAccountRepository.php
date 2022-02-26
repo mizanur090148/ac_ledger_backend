@@ -19,12 +19,13 @@ class ChartOfAccountRepository extends BaseRepository implements ChartOfAccountR
     }
 
     /**
+     * @param array $where
      * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function chartOfAccountList()
+    public function chartOfAccountList(array $where)
     {
         return ChartOfAccount::with('childChartOfAccounts')
-            ->whereNull('parent_id')
+            ->where($where)
             ->get();
     }
 }

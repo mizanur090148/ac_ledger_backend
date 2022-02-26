@@ -5,5 +5,5 @@ namespace App\Repositories\Interfaces;
 
 interface ChartOfAccountRepositoryInterface extends BaseRepositoryInterface
 {
-    public function chartOfAccountList();
+    public function chartOfAccountList(array $where);
 }

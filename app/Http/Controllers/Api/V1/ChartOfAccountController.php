@@ -29,7 +29,13 @@ class ChartOfAccountController extends Controller
     public function index()
     {
         try {
-            return responseSuccess($this->repository->chartOfAccountList());
+            $where = [
+                'parent_id' => null
+            ];
+            if (request('type')) {
+                $where['type'] = request('type');
+            }
+            return responseSuccess($this->repository->chartOfAccountList($where));
         } catch (Exception $e) {
         	return responseCantProcess($e);
         }
