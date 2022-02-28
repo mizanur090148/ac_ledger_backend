@@ -31,7 +31,7 @@ class BranchRequest extends FormRequest
                 'max:60',
                 new UniqueCheck(Branch::class)
             ],
-            'short_form' => [
+            'short_name' => [
                 'required',
                 'max:20',
                 new UniqueCheck(Branch::class)
