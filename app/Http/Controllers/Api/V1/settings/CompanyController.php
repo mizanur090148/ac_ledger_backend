@@ -72,7 +72,6 @@ class CompanyController extends Controller
     public function delete($id)
     {
         try {
-
             $this->repository->delete($id);
             return responseDeleted();
         } catch (Exception $e) {

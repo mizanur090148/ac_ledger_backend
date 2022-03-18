@@ -24,8 +24,37 @@ class ChartOfAccountRepository extends BaseRepository implements ChartOfAccountR
      */
     public function chartOfAccountList(array $where)
     {
-        return ChartOfAccount::with('childChartOfAccounts')
-            ->where($where)
-            ->get();
+        $result = ChartOfAccount::with('nodes')
+            ->select('id','parent_id','type','title as text')
+            ->where($where);
+
+        $assetQuery = clone $result;
+        $equityQuery = clone $result;
+        $liabilityQuery = clone $result;
+        $incomeQuery = clone $result;
+        $expenseQuery = clone $result;
+
+        return [
+            'assets'    => $assetQuery->where('type', 'assets')->get(),
+            'equity'    => $equityQuery->where('type', 'equity')->get(),
+            'liability' => $liabilityQuery->where('type', 'liability')->get(),
+            'income'    => $incomeQuery->where('type', 'income')->get(),
+            'expense'   => $expenseQuery->where('type', 'expense')->get(),
+        ];
     }
+
+    /**
+     * @param Interfaces\int $id
+     * @return mixed
+     */
+    public function chartOfAccountDelete($id)
+    {
+        $result = $this->model->find($id);
+        if (empty($result)) {
+            throw new NotFoundResourceException("No result found!");
+        }
+        $result->chartOfAccounts()->delete();
+        return $result->delete();
+    }
+
 }

@@ -31,16 +31,16 @@ class ChartOfAccount extends Model
      */
     public function chartOfAccounts()
     {
-        return $this->hasMany(self::class, 'parent_id', 'id');
+        return $this->hasMany(self::class, 'parent_id', 'id')->select('id','parent','type','title as text');
     }
 
-    /*public function parent()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function nodes()
     {
-        return $this->belongsTo(self::class)->withDefault();
-    }*/
-
-    public function childChartOfAccounts()
-    {
-        return $this->hasMany(self::class, 'parent_id')->with('childChartOfAccounts');
+        return $this->hasMany(self::class, 'parent_id')
+            ->select('id','parent_id','type','title as text','last_child')
+            ->with('nodes:id,parent_id,type,last_child,title as text');
     }
 }

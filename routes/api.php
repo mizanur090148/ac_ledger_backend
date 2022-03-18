@@ -38,7 +38,6 @@ Route::group([
     'middleware' => 'api',
     'namespace' => 'App\Http\Controllers\api\v1\settings',
     'prefix' => 'settings'
-
 ], function () {
     Route::get('/companies', [CompanyController::class, 'index']);
     Route::post('/companies', [CompanyController::class, 'store']);
@@ -61,6 +60,8 @@ Route::group([
     Route::post('/chart-of-accounts', [ChartOfAccountController::class, 'store']);
     Route::patch('/chart-of-accounts/{id}', [ChartOfAccountController::class, 'update']);
     Route::delete('/chart-of-accounts/{id}', [ChartOfAccountController::class, 'delete']);
+    Route::get('/chart-of-accounts/dropdown/{payMode}', [ChartOfAccountController::class, 'dropdown']);
+    Route::get('/chart-of-accounts/debit-or-credit-to-dropdown-data', [ChartOfAccountController::class, 'debitOrCreditToDropdown']);
 });
 
 Route::group([

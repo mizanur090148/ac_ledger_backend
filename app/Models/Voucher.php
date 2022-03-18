@@ -40,6 +40,27 @@ class Voucher extends Model
         'deleted_at'
     ];
 
+    protected $appends = [
+        'voucher_type_name',
+        'company_name'
+    ];
+
+    /**
+     * @return mixed
+     */
+    public function getVoucherTypeNameAttribute()
+    {
+        return VOUCHER_TYPES[$this->attributes['voucher_type']];
+    }
+
+    /**
+     * @return string
+     */
+    public function getCompanyNameAttribute()
+    {
+        return $this->company->name ?? '';
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

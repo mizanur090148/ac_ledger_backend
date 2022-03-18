@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Controllers\Api\V1\Services\DropdownService;
 use App\Http\Controllers\Controller;
+use App\Models\ChartOfAccount;
+use App\Models\Settings\Branch;
 use App\Repositories\Interfaces\ChartOfAccountRepositoryInterface;
 use App\Requests\ChartOfAccountRequest;
 use DB;
@@ -80,10 +83,31 @@ class ChartOfAccountController extends Controller
     public function delete($id)
     {
         try {
-            $this->repository->delete($id);
+            $this->repository->chartOfAccountDelete($id);
             return responseDeleted();
         } catch (Exception $e) {
             return responseCantProcess($e);
         }
+    }
+
+    /**
+     * @param null $payMode
+     * @param DropdownService $service
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function dropdown($payMode = null, DropdownService $service)
+    {
+        $branches = $service->chartOfAccountDropdownData(ChartOfAccount::class, $payMode);
+        return responseSuccess($branches);
+    }
+
+    /**
+     * @param DropdownService $service
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function debitOrCreditToDropdown(DropdownService $service)
+    {
+        $branches = $service->debitOrCreditToDropdownData(ChartOfAccount::class);
+        return responseSuccess($branches);
     }
 }

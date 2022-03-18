@@ -22,7 +22,9 @@ class VoucherRepository extends BaseRepository implements VoucherRepositoryInter
     {
         return $this->getModel()
             ->with('voucherDetails')
-            ->where('voucher_type', $voucherType)
+            ->when($voucherType, function ($query, $voucherType) {
+                $query->where('voucher_type', $voucherType);
+            })
             ->orderByDesc('id')
             ->paginate();
     }

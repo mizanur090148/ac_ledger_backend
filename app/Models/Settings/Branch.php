@@ -26,9 +26,21 @@ class Branch extends Model
         'deleted_by'
     ];
 
+    protected $appends = [
+        'company_name'
+    ];
+
     protected $dates = [
         'deleted_at'
     ];
+
+    /**
+     * @return string
+     */
+    public function getCompanyNameAttribute()
+    {
+        return $this->company->name ?? '';
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

@@ -17,7 +17,9 @@ class ChartOfAccountObserver
         $chartOfAccount = ChartOfAccount::where('id', $chartOfAccount->parent_id)
             ->orderby('id', 'desc')
             ->first();
-        $chartOfAccount->update(['last_child' => false]);
+        if ($chartOfAccount) {
+            $chartOfAccount->update(['last_child' => false]);
+        }
     }
 
     /**
