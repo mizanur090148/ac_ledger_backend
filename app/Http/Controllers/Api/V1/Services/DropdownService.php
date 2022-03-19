@@ -75,19 +75,42 @@ class DropdownService
 
     public function debitOrCreditToDropdownData($modelName)
     {
-        $cashAtHandOrBankIds = (new $modelName)->whereIn('title', ['Cash At Hand','Cash At Bank'])->pluck('id')->all();
-        return ChartOfAccount::with('nodes')
-            ->select('id','parent_id','type','last_child','title as text')
-            ->whereIn('parent_id', $cashAtHandOrBankIds)
-            ->get();
-
+        $result = $this->getData($modelName);
         // dropdown down data
         $model = new $modelName();
         $model = $model->select('id','title');
-        $model = $model->whereNotIn('parent_id', $cashAtHandOrBankIds);
+        $model = $model->whereNotIn('id', $this->levelOrder($result));
         $model = $model->where('last_child', true);
         $model = $model->orderBy('id', 'desc');
 
         return $model->get();
+    }
+
+    public function levelOrder($queue, array $output = [])
+    {
+        if (count($queue) === 0) {
+            return $output;
+        }
+        $node = array_shift($queue);
+        $childNodeData = $node['nodes'] ?? null;
+        if ($childNodeData) {
+            foreach ($childNodeData as $child) {
+                $queue[] = $child;
+            }
+        } else {
+            $output[] = $node['id'];
+        }
+
+        return $this->levelOrder($queue, $output);
+    }
+
+    public function getData($modelName)
+    {
+        $cashAtHandOrBankIds = (new $modelName)->whereIn('title', ['Cash At Hand','Cash At Bank'])->pluck('id')->all();
+        return ChartOfAccount::with('nodes')
+            ->select('id','parent_id','type','last_child','title as text')
+            ->whereIn('parent_id', $cashAtHandOrBankIds)
+            ->get()
+            ->toArray();
     }
 }

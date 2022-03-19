@@ -17,7 +17,7 @@ class CreateBranchesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('company_id');
             $table->string('name', 60);
-            $table->string('short_form', 20);
+            $table->string('short_name', 20);
             $table->string('concerned_person')->nullable();
             $table->string('address_one')->nullable();
             $table->string('address_two')->nullable();

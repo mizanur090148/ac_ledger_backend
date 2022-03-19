@@ -36,13 +36,14 @@ class Voucher extends Model
         'deleted_by'
     ];
 
-    protected $dates = [
-        'deleted_at'
-    ];
-
     protected $appends = [
+        'amount',
         'voucher_type_name',
         'company_name'
+    ];
+
+    protected $dates = [
+        'deleted_at'
     ];
 
     /**
@@ -59,6 +60,14 @@ class Voucher extends Model
     public function getCompanyNameAttribute()
     {
         return $this->company->name ?? '';
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAmountAttribute()
+    {
+        return $this->voucherDetails->sum('local_amount');
     }
 
     /**

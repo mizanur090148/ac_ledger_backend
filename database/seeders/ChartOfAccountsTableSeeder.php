@@ -257,9 +257,13 @@ class ChartOfAccountsTableSeeder extends Seeder
             'type'  => $type,
             'parent_id' => ChartOfAccount::whereTitle($node['parent'])->first()->id ?? null
         ];
-        ChartOfAccount::create($input);
-        foreach ($node['child'] ?? [] as $child) {
+        $chartOfAccount = ChartOfAccount::create($input);
+        $childNodes = $node['child'] ?? [];
+        foreach ($childNodes as $child) {
             $queue[] = $child;
+        }
+        if (!count($childNodes)) {
+            $chartOfAccount->update(['last_child' => true]);
         }
         return $this->levelOrder($queue, $type);
     }

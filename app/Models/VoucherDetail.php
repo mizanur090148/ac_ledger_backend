@@ -19,6 +19,7 @@ class VoucherDetail extends Model
         'account_head',
         'voucher_id',
         'debit_to',
+        'credit_to',
         'account_balance',
         'description',
         'con_rate',
@@ -26,6 +27,10 @@ class VoucherDetail extends Model
         'created_by',
         'updated_by',
         'deleted_by'
+    ];
+
+    protected $appends = [
+      'local_amount'
     ];
 
     protected $dates = [
@@ -46,6 +51,12 @@ class VoucherDetail extends Model
     public function branch()
     {
         return $this->belongsTo(Branch::class);
+    }
+
+
+    public function getLocalAmountAttribute()
+    {
+        return $this->con_rate * $this->fc_amount;
     }
 
 }
