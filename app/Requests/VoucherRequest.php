@@ -51,14 +51,6 @@ class VoucherRequest extends FormRequest
                 'nullable',
                 'max:255'
             ],
-            'pay_mode' => [
-                'required',
-                function ($field, $value, \Closure $failed) {
-                    if (!in_array($value,['cash','bank'])){
-                        $failed("Invalid pay mode");
-                    }
-                }
-            ],
             'credit_by' => [
                 'nullable',
                 'numeric'
@@ -100,6 +92,16 @@ class VoucherRequest extends FormRequest
                 'max:255'
             ]
         ];
+        if ($this->voucher_type != JOURNAL) {
+            $input['pay_mode'] = [
+                'required',
+                function ($field, $value, \Closure $failed) {
+                    if (!in_array($value,['cash','bank'])){
+                        $failed("Invalid pay mode");
+                    }
+                }
+            ];
+        }
         if ($this->voucher_type == DEBIT_OR_PAYMENT) {
             $input['debit_to.*'] = [
                 'required',

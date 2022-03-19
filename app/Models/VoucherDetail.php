@@ -53,7 +53,9 @@ class VoucherDetail extends Model
         return $this->belongsTo(Branch::class);
     }
 
-
+    /**
+     * @return float|int
+     */
     public function getLocalAmountAttribute()
     {
         return $this->con_rate * $this->fc_amount;
