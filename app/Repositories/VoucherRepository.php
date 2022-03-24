@@ -66,4 +66,16 @@ class VoucherRepository extends BaseRepository implements VoucherRepositoryInter
         $voucher->delete($id);
         return $voucher->voucherDetails()->delete();
     }
+
+    /**
+     * @param $voucherType
+     * @return mixed
+     */
+    public function getLastCreatedVoucher($voucherType)
+    {
+        return $this->getModel()
+            ->where('voucher_type', $voucherType)
+            ->orderByDesc('id')
+            ->first();
+    }
 }

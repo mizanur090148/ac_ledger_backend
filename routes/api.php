@@ -62,6 +62,7 @@ Route::group([
     Route::delete('/chart-of-accounts/{id}', [ChartOfAccountController::class, 'delete']);
     Route::get('/chart-of-accounts/dropdown/{payMode}', [ChartOfAccountController::class, 'dropdown']);
     Route::get('/chart-of-accounts/debit-or-credit-to-dropdown-data', [ChartOfAccountController::class, 'debitOrCreditToDropdown']);
+    Route::get('/chart-of-accounts/all-child-dropdown-data', [ChartOfAccountController::class, 'allChildDropdownData']);
 });
 
 Route::group([
@@ -73,4 +74,5 @@ Route::group([
     Route::patch('/vouchers/{id}', [VoucherController::class, 'update']);
     Route::delete('/vouchers/{id}', [VoucherController::class, 'delete']);
     Route::get('/vouchers/dropdown-data', [VoucherController::class, 'dropdownData']);
+    Route::get('/vouchers/new-voucher-no/{voucherType}', [VoucherController::class, 'newVoucherNo']);
 });

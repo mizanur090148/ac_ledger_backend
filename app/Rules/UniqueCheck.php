@@ -10,9 +10,8 @@ class UniqueCheck implements Rule
     private $uniqueColumnName;
 
     /**
-     * Create a new rule instance.
-     *
-     * @return void
+     * UniqueCheck constructor.
+     * @param $modelClassName
      */
     public function __construct($modelClassName)
     {     
@@ -26,9 +25,10 @@ class UniqueCheck implements Rule
      */
     public function passes($attribute, $value)
     {
-        // Don not change because it is common single colimn wise unique validation rule
+        // Don not change because it is common single column wise unique validation rule
         $this->uniqueColumnName = $attribute;
-        $row = $this->modelClassName::where($attribute, $value);
+        $row = new $this->modelClassName();
+        $row = $row->where($attribute, $value);
         if (request('id')) {
             $row = $row->where('id', '!=', request('id'));
         }

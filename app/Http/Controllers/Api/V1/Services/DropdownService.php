@@ -59,33 +59,23 @@ class DropdownService
      * @param $modelName
      * @return mixed
      */
-    /*public function debitOrCreditToDropdownData($modelName)
-    {
-        $cashAtHandOrBankIds = (new $modelName)->whereIn('title', ['Cash At Hand','Cash At Bank'])->pluck('id');
-
-        // dropdown down data
-        $model = new $modelName();
-        $model = $model->select('id','title');
-        $model = $model->whereNotIn('parent_id', $cashAtHandOrBankIds);
-        $model = $model->where('last_child', true);
-        $model = $model->orderBy('id', 'desc');
-
-        return $model->get();
-    }*/
-
     public function debitOrCreditToDropdownData($modelName)
     {
-        $result = $this->getData($modelName);
+        $result = $this->getData($modelName, 'debit_or_credit');
         // dropdown down data
         $model = new $modelName();
         $model = $model->select('id','title');
         $model = $model->whereNotIn('id', $this->levelOrder($result));
         $model = $model->where('last_child', true);
         $model = $model->orderBy('id', 'desc');
-
         return $model->get();
     }
 
+    /**
+     * @param $queue
+     * @param array $output
+     * @return array
+     */
     public function levelOrder($queue, array $output = [])
     {
         if (count($queue) === 0) {
@@ -104,13 +94,37 @@ class DropdownService
         return $this->levelOrder($queue, $output);
     }
 
-    public function getData($modelName)
+    /**
+     * @param $modelName
+     * @param $type
+     * @return array
+     */
+    public function getData($modelName, $type)
     {
         $cashAtHandOrBankIds = (new $modelName)->whereIn('title', ['Cash At Hand','Cash At Bank'])->pluck('id')->all();
+
         return ChartOfAccount::with('nodes')
             ->select('id','parent_id','type','last_child','title as text')
-            ->whereIn('parent_id', $cashAtHandOrBankIds)
+            ->when($type != 'all_child_node', function($query) use ($cashAtHandOrBankIds) {
+                $query->whereIn('parent_id', $cashAtHandOrBankIds);
+            })
             ->get()
             ->toArray();
+    }
+
+    /**
+     * @param $modelName
+     * @return mixed
+     */
+    public function allChildNodeDropdownData($modelName)
+    {
+        $result = $this->getData($modelName, 'all_child_node');
+        // dropdown down data
+        $model = new $modelName();
+        $model = $model->select('id','title');
+        $model = $model->whereIn('id', $this->levelOrder($result));
+        $model = $model->where('last_child', true);
+        $model = $model->orderBy('id', 'desc');
+        return $model->get();
     }
 }

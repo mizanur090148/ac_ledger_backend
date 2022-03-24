@@ -110,4 +110,14 @@ class ChartOfAccountController extends Controller
         $branches = $service->debitOrCreditToDropdownData(ChartOfAccount::class);
         return responseSuccess($branches);
     }
+
+    /**
+     * @param DropdownService $service
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function allChildDropdownData(DropdownService $service)
+    {
+        $branches = $service->allChildNodeDropdownData(ChartOfAccount::class);
+        return responseSuccess($branches);
+    }
 }

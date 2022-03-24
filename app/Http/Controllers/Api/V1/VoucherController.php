@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Settings\Company;
 use App\Repositories\Interfaces\VoucherRepositoryInterface;
 use App\Requests\VoucherRequest;
+use Illuminate\Support\Str;
 use DB;
 use Request;
 
@@ -118,6 +119,27 @@ class VoucherController extends Controller
         $result['companies'] = $companies;
 
         return responseSuccess($result);
+    }
+
+    public function newVoucherNo($voucherType)
+    {
+        $currentYear = date('Y');
+        $lastVoucher = $this->repository->getLastCreatedVoucher($voucherType);
+        if ($lastVoucher) {
+            $newVoucherNo = (int) Str::substr($lastVoucher->voucher_no, ($voucherType == CONTRA) ? 9 : 8) + 1;
+        } else {
+            $newVoucherNo = 1;
+        }
+        if ($voucherType == DEBIT_OR_PAYMENT) {
+            $newVoucherNo = 'DV-' . $currentYear . '-' . $newVoucherNo;
+        } else if ($voucherType == CREDIT_OR_RECEIVED) {
+            $newVoucherNo = 'CV-' . $currentYear . '-' . $newVoucherNo;
+        } else if ($voucherType == CONTRA) {
+            $newVoucherNo = 'CTV-' . $currentYear . '-' . $newVoucherNo;
+        } else if ($voucherType == JOURNAL) {
+            $newVoucherNo = 'JV-' . $currentYear . '-' . $newVoucherNo;
+        }
+        return responseSuccess($newVoucherNo);
     }
 
 }
