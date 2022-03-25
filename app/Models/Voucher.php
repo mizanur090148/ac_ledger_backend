@@ -67,7 +67,12 @@ class Voucher extends Model
      */
     public function getAmountAttribute()
     {
-        return $this->voucherDetails->sum('local_amount');
+        if ($this->voucher_type == 0 || $this->voucher_type == 1) {
+            $result = $this->voucherDetails->where('transaction_type', 1)->sum('local_amount');
+        } else {
+            $result = $this->voucherDetails->sum('local_amount');
+        }
+        return $result;
     }
 
     /**

@@ -75,6 +75,7 @@ class VoucherRepository extends BaseRepository implements VoucherRepositoryInter
     {
         return $this->getModel()
             ->where('voucher_type', $voucherType)
+            ->whereYear('created_date', date('Y'))
             ->orderByDesc('id')
             ->first();
     }

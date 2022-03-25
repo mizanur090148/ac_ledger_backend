@@ -47,8 +47,13 @@ class VoucherController extends Controller
     {
         try {
             DB::beginTransaction();
-            $voucherDetails = $this->processVoucherInput($request);
-            $result = $this->repository->storeVoucher($request->validated(), $voucherDetails);
+            $voucherDetails = [];
+            $voucherDetails = $this->processVoucherInput($request, 0, $voucherDetails, false);
+            if ($request->voucher_type == 0 || $request->voucher_type == 1) {
+                $count = count($request->account_balance);
+                $voucherDetails = $this->processVoucherInput($request, $count, $voucherDetails, true);
+            }
+            $result = $this->repository->storeVoucher($request->validated(), $voucherDetails, true);
             DB::commit();
             return responseCreated($result);
         } catch (Exception $e) {
@@ -91,20 +96,26 @@ class VoucherController extends Controller
 
     /**
      * @param $request
+     * @param $transactionStatus
      * @return array
      */
-    public function processVoucherInput($request)
+    public function processVoucherInput($request, $i, $voucherDetails, $transactionStatus)
     {
-        $voucherDetails = [];
+        if ($request->voucher_type == 0 || $request->voucher_type == 1) {
+            $transactionType = $transactionStatus ? 1 : 0;
+        }
+
         foreach ($request->account_balance as $key => $acBalance) {
-            $voucherDetails[$key]['debit_to'] = $request->debit_to[$key] ?? null;
-            $voucherDetails[$key]['credit_to'] = $request->credit_to[$key] ?? null;
-            $voucherDetails[$key]['account_type'] = $request->account_type[$key] ?? null;
-            $voucherDetails[$key]['account_head'] = $request->account_head[$key] ?? null;
-            $voucherDetails[$key]['account_balance'] = $acBalance;
-            $voucherDetails[$key]['description'] = $request->description[$key];
-            $voucherDetails[$key]['con_rate'] = $request->con_rate[$key];
-            $voucherDetails[$key]['fc_amount'] = $request->fc_amount[$key];
+            $voucherDetails[$i]['debit_to'] = $request->debit_to[$key] ?? null;
+            $voucherDetails[$i]['credit_to'] = $request->credit_to[$key] ?? null;
+            $voucherDetails[$i]['account_type'] = $request->account_type[$key] ?? null;
+            $voucherDetails[$i]['transaction_type'] = $transactionType ?? null;
+            $voucherDetails[$i]['account_head'] = $request->account_head[$key] ?? null;
+            $voucherDetails[$i]['account_balance'] = $acBalance;
+            $voucherDetails[$i]['description'] = $request->description[$key];
+            $voucherDetails[$i]['con_rate'] = $request->con_rate[$key];
+            $voucherDetails[$i]['fc_amount'] = $request->fc_amount[$key];
+            $i++;
         }
         return $voucherDetails;
     }

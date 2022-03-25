@@ -16,6 +16,7 @@ class VoucherDetail extends Model
 
     protected $fillable = [
         'account_type',
+        'transaction_type',
         'account_head',
         'voucher_id',
         'debit_to',
