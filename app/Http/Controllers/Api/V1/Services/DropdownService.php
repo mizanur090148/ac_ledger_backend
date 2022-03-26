@@ -33,8 +33,7 @@ class DropdownService
 
     /**
      * @param $modelName
-     * @param array $where
-     * @param array $select
+     * @param $payMode
      * @return mixed
      */
     public function chartOfAccountDropdownData($modelName, $payMode)
@@ -44,12 +43,12 @@ class DropdownService
         } elseif ($payMode == 'bank') {
             $title = 'Cash At Bank';
         }
-        $cashAtHandOrBankId = (new $modelName)->where('title', $title)->first()->id ?? null;
+        $cashAtHandOrBank = (new $modelName)->with('nodes')->where('title', $title)->get()->toArray();
 
         // dropdown down data
         $model = new $modelName();
         $model = $model->select('id','title');
-        $model = $model->where('parent_id', $cashAtHandOrBankId);
+        $model = $model->whereIn('id', $this->levelOrder($cashAtHandOrBank));
         $model = $model->orderBy('id', 'desc');
 
         return $model->get();
@@ -103,7 +102,7 @@ class DropdownService
     {
         $cashAtHandOrBankIds = (new $modelName)->whereIn('title', ['Cash At Hand','Cash At Bank'])->pluck('id')->all();
 
-        return ChartOfAccount::with('nodes')
+        return (new $modelName)->with('nodes')
             ->select('id','parent_id','type','last_child','title as text')
             ->when($type != 'all_child_node', function($query) use ($cashAtHandOrBankIds) {
                 $query->whereIn('parent_id', $cashAtHandOrBankIds);
