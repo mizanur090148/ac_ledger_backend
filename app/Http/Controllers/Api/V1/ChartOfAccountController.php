@@ -105,9 +105,9 @@ class ChartOfAccountController extends Controller
      * @param DropdownService $service
      * @return \Illuminate\Http\JsonResponse
      */
-    public function debitOrCreditToDropdown(DropdownService $service)
+    public function debitOrCreditToDropdown(DropdownService $service, $type = null)
     {
-        $branches = $service->debitOrCreditToDropdownData(ChartOfAccount::class);
+        $branches = $service->debitOrCreditToDropdownData(ChartOfAccount::class, $type);
         return responseSuccess($branches);
     }
 

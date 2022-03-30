@@ -61,7 +61,7 @@ Route::group([
     Route::patch('/chart-of-accounts/{id}', [ChartOfAccountController::class, 'update']);
     Route::delete('/chart-of-accounts/{id}', [ChartOfAccountController::class, 'delete']);
     Route::get('/chart-of-accounts/dropdown/{payMode}', [ChartOfAccountController::class, 'dropdown']);
-    Route::get('/chart-of-accounts/debit-or-credit-to-dropdown-data', [ChartOfAccountController::class, 'debitOrCreditToDropdown']);
+    Route::get('/chart-of-accounts/debit-or-credit-to-dropdown-data/{type?}', [ChartOfAccountController::class, 'debitOrCreditToDropdown']);
     Route::get('/chart-of-accounts/all-child-dropdown-data', [ChartOfAccountController::class, 'allChildDropdownData']);
 });
 

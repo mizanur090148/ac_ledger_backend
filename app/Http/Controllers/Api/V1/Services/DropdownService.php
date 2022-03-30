@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\V1\Services;
 
-use App\Models\ChartOfAccount;
 
 class DropdownService
 {
@@ -56,15 +55,23 @@ class DropdownService
 
     /**
      * @param $modelName
+     * @param $type
      * @return mixed
      */
-    public function debitOrCreditToDropdownData($modelName)
+    public function debitOrCreditToDropdownData($modelName, $type)
     {
-        $result = $this->getData($modelName, 'debit_or_credit');
+        $type = $type ?? 'debit_or_credit';
+        $result = $this->getData($modelName, $type);
         // dropdown down data
         $model = new $modelName();
         $model = $model->select('id','title');
-        $model = $model->whereNotIn('id', $this->levelOrder($result));
+        $model = $model->when($type == 'debit_or_credit' || $type == 'contra', function ($query) use ($type, $result) {
+            if ($type == 'debit_or_credit') {
+                $query->whereNotIn('id', $this->levelOrder($result));
+            } elseif ($type == 'contra') {
+                $query->whereIn('id', $this->levelOrder($result));
+            }
+        });
         $model = $model->where('last_child', true);
         $model = $model->orderBy('id', 'desc');
         return $model->get();
@@ -100,11 +107,13 @@ class DropdownService
      */
     public function getData($modelName, $type)
     {
-        $cashAtHandOrBankIds = (new $modelName)->whereIn('title', ['Cash At Hand','Cash At Bank'])->pluck('id')->all();
-
+        $cashAtHandOrBankIds = [];
+        if ($type == 'debit_or_credit' || $type == 'contra') {
+            $cashAtHandOrBankIds = (new $modelName)->whereIn('title', ['Cash At Hand','Cash At Bank'])->pluck('id')->all();
+        }
         return (new $modelName)->with('nodes')
             ->select('id','parent_id','type','last_child','title as text')
-            ->when($type != 'all_child_node', function($query) use ($cashAtHandOrBankIds) {
+            ->when($type == 'debit_or_credit' || $type == 'contra', function($query) use ($cashAtHandOrBankIds) {
                 $query->whereIn('parent_id', $cashAtHandOrBankIds);
             })
             ->get()
