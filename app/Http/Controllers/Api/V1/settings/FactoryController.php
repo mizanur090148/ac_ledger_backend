@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Api\V1\settings;
 
 use App\Models\Group;
+use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\V1\BaseController as BaseController;
 use App\Http\Controllers\Api\V1\ApiCrudHandler;
 use App\Requests\Settings\FactoryRequest;
 use App\Requests\Settings\FactoryLogoRequest;
 use App\Models\Factory;
+use Illuminate\Http\Response;
 use Validator;
 
 class FactoryController extends BaseController
@@ -59,11 +61,11 @@ class FactoryController extends BaseController
                 $dbStoreName = 'storage/logo/'.$imageName;
                 $logo->storeAs($destinationPath, $imageName);
                 $input['logo'] =  $dbStoreName;
-                $request = new \Illuminate\Http\Request($input);
+                $request = new Request($input);
             }
             $modelData = $this->apiCrudHandler->update($id, $request, Factory::class);
             return $this->sendResponse($modelData);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->sendError($e->getMessage());
         }
     }
@@ -87,7 +89,7 @@ class FactoryController extends BaseController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -95,7 +97,7 @@ class FactoryController extends BaseController
             $with = ['group'];
             $modelData = $this->apiCrudHandler->show($id, Factory::class, $with);
             return $this->sendResponse($modelData);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->sendError($e->getMessage());
         }
     }
@@ -104,7 +106,7 @@ class FactoryController extends BaseController
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function delete($id)
     {

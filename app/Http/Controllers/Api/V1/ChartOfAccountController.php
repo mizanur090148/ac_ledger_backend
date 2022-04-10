@@ -9,6 +9,8 @@ use App\Models\Settings\Branch;
 use App\Repositories\Interfaces\ChartOfAccountRepositoryInterface;
 use App\Requests\ChartOfAccountRequest;
 use DB;
+use Illuminate\Http\JsonResponse;
+use JsonResponse4;
 
 class ChartOfAccountController extends Controller
 {
@@ -27,7 +29,7 @@ class ChartOfAccountController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse|\JsonResponse
+     * @return JsonResponse|\JsonResponse
      */
     public function index()
     {
@@ -46,7 +48,7 @@ class ChartOfAccountController extends Controller
 
     /**
      * @param ChartOfAccountRequest $request
-     * @return \Illuminate\Http\JsonResponse|\JsonResponse4
+     * @return JsonResponse|JsonResponse4
      */
     public function store(ChartOfAccountRequest $request)
     {
@@ -78,7 +80,7 @@ class ChartOfAccountController extends Controller
 
     /**
      * @param $id
-     * @return \Illuminate\Http\JsonResponse|\JsonResponse
+     * @return JsonResponse|\JsonResponse
      */
     public function delete($id)
     {
@@ -93,7 +95,7 @@ class ChartOfAccountController extends Controller
     /**
      * @param null $payMode
      * @param DropdownService $service
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function dropdown($payMode = null, DropdownService $service)
     {
@@ -103,7 +105,7 @@ class ChartOfAccountController extends Controller
 
     /**
      * @param DropdownService $service
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function debitOrCreditToDropdown(DropdownService $service, $type = null)
     {
@@ -113,7 +115,7 @@ class ChartOfAccountController extends Controller
 
     /**
      * @param DropdownService $service
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function allChildDropdownData(DropdownService $service)
     {

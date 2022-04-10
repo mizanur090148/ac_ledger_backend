@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Settings\Company;
 use App\Repositories\Interfaces\CompanyRepositoryInterface;
 use App\Requests\Settings\CompanyRequest;
+use Illuminate\Http\JsonResponse;
+use JsonResponse4;
 
 class CompanyController extends Controller
 {
@@ -25,7 +27,7 @@ class CompanyController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse|\JsonResponse
+     * @return JsonResponse|\JsonResponse
      */
     public function index()
     {
@@ -38,7 +40,7 @@ class CompanyController extends Controller
 
     /**
      * @param CompanyRequest $request
-     * @return \Illuminate\Http\JsonResponse|\JsonResponse4
+     * @return JsonResponse|JsonResponse4
      */
     public function store(CompanyRequest $request)
     {
@@ -67,7 +69,7 @@ class CompanyController extends Controller
 
     /**
      * @param $id
-     * @return \Illuminate\Http\JsonResponse|\JsonResponse
+     * @return JsonResponse|\JsonResponse
      */
     public function delete($id)
     {
@@ -81,7 +83,7 @@ class CompanyController extends Controller
 
     /**
      * @param DropdownService $service
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function dropdown(DropdownService $service)
     {

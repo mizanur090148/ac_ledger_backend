@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\BaseController as BaseController;
 use App\Http\Controllers\Api\ApiCrudHandler;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use Illuminate\Http\Response;
 use Validator;
 
 class UserController extends BaseController
@@ -73,7 +74,7 @@ class UserController extends BaseController
 
     /**
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function delete($id, User $user)
     {

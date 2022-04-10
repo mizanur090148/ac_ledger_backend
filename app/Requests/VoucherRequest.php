@@ -2,6 +2,7 @@
 
 namespace App\Requests;
 
+use Closure;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\UniqueCheck;
 use App\Models\Voucher;
@@ -57,7 +58,7 @@ class VoucherRequest extends FormRequest
             ],
             'currency' => [
                 'required',
-                function ($field, $value, \Closure $failed) {
+                function ($field, $value, Closure $failed) {
                     if (!in_array($value,['bdt','usd','euro'])){
                         $failed("Invalid currency");
                     }
@@ -95,7 +96,7 @@ class VoucherRequest extends FormRequest
         if ($this->voucher_type != JOURNAL) {
             $input['pay_mode'] = [
                 'required',
-                function ($field, $value, \Closure $failed) {
+                function ($field, $value, Closure $failed) {
                     if (!in_array($value,['cash','bank'])){
                         $failed("Invalid pay mode");
                     }
@@ -119,7 +120,7 @@ class VoucherRequest extends FormRequest
             ];
             $input['account_type.*'] = [
                 'required',
-                function ($field, $value, \Closure $failed) {
+                function ($field, $value, Closure $failed) {
                     if (!in_array($value,['debit','credit'])){
                         $failed("Invalid account type");
                     }

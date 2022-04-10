@@ -21,8 +21,13 @@ class VoucherRepository extends BaseRepository implements VoucherRepositoryInter
     public function voucherList($voucherType)
     {
         return $this->getModel()
-            ->with('voucherDetails')
-            ->when($voucherType, function ($query, $voucherType) {
+            ->with([
+                'voucherDetails',
+                'voucherDetails.chartOfAccount:id,title',
+                'company:id,name,address_one',
+                'branch:id,name',
+                'chartOfAccount:id,title'
+            ])->when($voucherType, function ($query, $voucherType) {
                 $query->where('voucher_type', $voucherType);
             })
             ->orderByDesc('id')

@@ -7,6 +7,8 @@ use App\Http\Controllers\Api\V1\Services\DropdownService;
 use App\Models\Settings\Branch;
 use App\Repositories\Interfaces\BranchRepositoryInterface;
 use App\Requests\Settings\BranchRequest;
+use Illuminate\Http\JsonResponse;
+use JsonResponse4;
 
 
 class BranchController extends Controller
@@ -26,7 +28,7 @@ class BranchController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse|\JsonResponse
+     * @return JsonResponse|\JsonResponse
      */
     public function index()
     {
@@ -39,7 +41,7 @@ class BranchController extends Controller
 
     /**
      * @param BranchRequest $request
-     * @return \Illuminate\Http\JsonResponse|\JsonResponse4
+     * @return JsonResponse|JsonResponse4
      */
     public function store(BranchRequest $request)
     {
@@ -68,7 +70,7 @@ class BranchController extends Controller
 
     /**
      * @param $id
-     * @return \Illuminate\Http\JsonResponse|\JsonResponse
+     * @return JsonResponse|\JsonResponse
      */
     public function delete($id)
     {
@@ -83,7 +85,7 @@ class BranchController extends Controller
     /**
      * @param $companyId
      * @param DropdownService $service
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function dropdown($companyId = null, DropdownService $service)
     {

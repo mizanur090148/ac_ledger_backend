@@ -9,7 +9,7 @@ class ChartOfAccountObserver
     /**
      * Handle the ChartOfAccount "created" event.
      *
-     * @param  \App\Models\ChartOfAccount  $chartOfAccount
+     * @param ChartOfAccount $chartOfAccount
      * @return void
      */
     public function created(ChartOfAccount $chartOfAccount)
@@ -25,7 +25,7 @@ class ChartOfAccountObserver
     /**
      * Handle the ChartOfAccount "updated" event.
      *
-     * @param  \App\Models\ChartOfAccount  $chartOfAccount
+     * @param ChartOfAccount $chartOfAccount
      * @return void
      */
     public function updated(ChartOfAccount $chartOfAccount)
@@ -36,7 +36,7 @@ class ChartOfAccountObserver
     /**
      * Handle the ChartOfAccount "deleted" event.
      *
-     * @param  \App\Models\ChartOfAccount  $chartOfAccount
+     * @param ChartOfAccount $chartOfAccount
      * @return void
      */
     public function deleted(ChartOfAccount $chartOfAccount)
@@ -47,7 +47,7 @@ class ChartOfAccountObserver
     /**
      * Handle the ChartOfAccount "restored" event.
      *
-     * @param  \App\Models\ChartOfAccount  $chartOfAccount
+     * @param ChartOfAccount $chartOfAccount
      * @return void
      */
     public function restored(ChartOfAccount $chartOfAccount)
@@ -58,7 +58,7 @@ class ChartOfAccountObserver
     /**
      * Handle the ChartOfAccount "force deleted" event.
      *
-     * @param  \App\Models\ChartOfAccount  $chartOfAccount
+     * @param ChartOfAccount $chartOfAccount
      * @return void
      */
     public function forceDeleted(ChartOfAccount $chartOfAccount)

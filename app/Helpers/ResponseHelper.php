@@ -62,7 +62,7 @@ if (!function_exists('responseCantProcess')) {
      * @param string|null $message
      * @return JsonResponse
      */
-    function responseCantProcess(\Throwable $t = null, string $message = null): JsonResponse
+    function responseCantProcess(Throwable $t = null, string $message = null): JsonResponse
     {
         $response = [
             'status' => $t ? $t->getCode() : null,

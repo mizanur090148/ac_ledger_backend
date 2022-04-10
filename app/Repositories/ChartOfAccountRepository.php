@@ -5,6 +5,8 @@ namespace App\Repositories;
 
 use App\Repositories\Interfaces\ChartOfAccountRepositoryInterface;
 use App\Models\ChartOfAccount;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
 class ChartOfAccountRepository extends BaseRepository implements ChartOfAccountRepositoryInterface
 {
@@ -20,7 +22,7 @@ class ChartOfAccountRepository extends BaseRepository implements ChartOfAccountR
 
     /**
      * @param array $where
-     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     * @return Builder[]|Collection
      */
     public function chartOfAccountList(array $where)
     {

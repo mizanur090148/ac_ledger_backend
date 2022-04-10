@@ -5,6 +5,7 @@ namespace App\Requests\Settings;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Settings\Company;
 use Illuminate\Support\Str;
+use Request;
 
 class DeleteRequest extends FormRequest
 {
@@ -27,7 +28,7 @@ class DeleteRequest extends FormRequest
      */
     public function rules()
     {
-        $data = ucfirst(Str::singular(\Request::segment(4)));
+        $data = ucfirst(Str::singular(Request::segment(4)));
         dd($data);
         return [
             'name' => [

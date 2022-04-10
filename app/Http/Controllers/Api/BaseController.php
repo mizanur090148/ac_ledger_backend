@@ -4,13 +4,15 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Throwable;
 
 class BaseController extends Controller
 {
     /**
      * success response method.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function sendResponse($result)
     {
@@ -73,7 +75,7 @@ class BaseController extends Controller
         return response()->json($response);
     }
 
-    public function responseCantProcess(\Throwable $t = null, string $message = null): JsonResponse
+    public function responseCantProcess(Throwable $t = null, string $message = null): JsonResponse
     {
         $response = [
             'status' => $t ? $t->getCode() : null,
@@ -98,7 +100,7 @@ class BaseController extends Controller
     /**
      * return error response.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function sendError($error)
     {

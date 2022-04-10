@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\V1\settings;
 use App\Http\Controllers\Controller;
 use App\Repositories\Interfaces\AccountRepositoryInterface;
 use App\Requests\Settings\AccountRequest;
+use JsonResponse;
+use JsonResponse4;
 
 class AccountController extends Controller
 {
@@ -23,7 +25,7 @@ class AccountController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse|\JsonResponse
+     * @return \Illuminate\Http\JsonResponse|JsonResponse
      */
     public function index()
     {
@@ -36,7 +38,7 @@ class AccountController extends Controller
 
     /**
      * @param AccountRequest $request
-     * @return \Illuminate\Http\JsonResponse|\JsonResponse4
+     * @return \Illuminate\Http\JsonResponse|JsonResponse4
      */
     public function store(AccountRequest $request)
     {
@@ -51,7 +53,7 @@ class AccountController extends Controller
     /**
      * @param $id
      * @param AccountRequest $request
-     * @return \JsonResponse
+     * @return JsonResponse
      */
     public function update($id, AccountRequest $request)
     {
@@ -65,7 +67,7 @@ class AccountController extends Controller
 
     /**
      * @param $id
-     * @return \Illuminate\Http\JsonResponse|\JsonResponse
+     * @return \Illuminate\Http\JsonResponse|JsonResponse
      */
     public function delete($id)
     {

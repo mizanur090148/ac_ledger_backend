@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Settings\Company;
 use App\Repositories\Interfaces\VoucherRepositoryInterface;
 use App\Requests\VoucherRequest;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
 use DB;
 use Request;
@@ -28,7 +29,7 @@ class VoucherController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse|\JsonResponse
+     * @return JsonResponse|\JsonResponse
      */
     public function index()
     {
@@ -41,7 +42,7 @@ class VoucherController extends Controller
 
     /**
      * @param VoucherRequest $request
-     * @return \Illuminate\Http\JsonResponse|\JsonResponse
+     * @return JsonResponse|\JsonResponse
      */
     public function store(VoucherRequest $request)
     {
@@ -82,7 +83,7 @@ class VoucherController extends Controller
 
     /**
      * @param $id
-     * @return \Illuminate\Http\JsonResponse|\JsonResponse
+     * @return JsonResponse|\JsonResponse
      */
     public function delete($id)
     {
@@ -122,7 +123,7 @@ class VoucherController extends Controller
 
     /**
      * @param DropdownService $service
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function dropdownData(DropdownService $service)
     {
