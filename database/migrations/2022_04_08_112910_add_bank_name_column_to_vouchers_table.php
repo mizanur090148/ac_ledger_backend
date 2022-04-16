@@ -15,6 +15,7 @@ class AddBankNameColumnToVouchersTable extends Migration
     {
         Schema::table('vouchers', function (Blueprint $table) {
             $table->string('bank_name', 100)->nullable()->after('currency');
+            $table->smallInteger('status')->default(0)->after('message_for_audit')->comment('0=created,1=approved');
         });
     }
 
@@ -26,7 +27,7 @@ class AddBankNameColumnToVouchersTable extends Migration
     public function down()
     {
         Schema::table('vouchers', function (Blueprint $table) {
-            $table->dropColumn('bank_name');
+            $table->dropColumn('bank_name','status');
         });
     }
 }

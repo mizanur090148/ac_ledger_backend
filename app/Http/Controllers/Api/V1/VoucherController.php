@@ -72,11 +72,17 @@ class VoucherController extends Controller
     {
         try {
             DB::beginTransaction();
-            $voucherDetails = $this->processVoucherInput($request);
-            $result = $this->repository->updateVoucher($id, $request->validated(), $voucherDetails);
+            $voucherDetails = [];
+            $voucherDetails = $this->processVoucherInput($request, 0, $voucherDetails, false);
+            if ($request->voucher_type == 0 || $request->voucher_type == 1) {
+                $count = count($request->account_balance);
+                $voucherDetails = $this->processVoucherInput($request, $count, $voucherDetails, true);
+            }
+            $result = $this->repository->updateVoucher($id, $request->validated(), $voucherDetails, true);
             DB::commit();
             return responsePatched($result);
         } catch (Exception $e) {
+            DB::rollback();
             return responseCantProcess($e);
         }
     }
@@ -110,7 +116,7 @@ class VoucherController extends Controller
             $voucherDetails[$i]['debit_to'] = $request->debit_to[$key] ?? null;
             $voucherDetails[$i]['credit_to'] = $request->credit_to[$key] ?? null;
             $voucherDetails[$i]['account_type'] = $request->account_type[$key] ?? null;
-            $voucherDetails[$i]['transaction_type'] = $transactionType ?? null;
+            $voucherDetails[$i]['transaction_type'] = $transactionType ?? 1;
             $voucherDetails[$i]['account_head'] = $request->account_head[$key] ?? null;
             $voucherDetails[$i]['account_balance'] = $acBalance;
             $voucherDetails[$i]['description'] = $request->description[$key];
@@ -133,6 +139,10 @@ class VoucherController extends Controller
         return responseSuccess($result);
     }
 
+    /**
+     * @param $voucherType
+     * @return JsonResponse
+     */
     public function newVoucherNo($voucherType)
     {
         $currentYear = date('Y');
@@ -154,4 +164,17 @@ class VoucherController extends Controller
         return responseSuccess($newVoucherNo);
     }
 
+    /**
+     * @param $id
+     * @return \JsonResponse
+     */
+    public function approve($id)
+    {
+        try {
+            $this->repository->approveVoucher($id);
+            return responsePatched();
+        } catch (Exception $e) {
+            return responseCantProcess($e);
+        }
+    }
 }

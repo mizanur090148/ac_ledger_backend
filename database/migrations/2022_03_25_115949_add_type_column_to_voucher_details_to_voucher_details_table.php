@@ -15,7 +15,7 @@ class AddTypeColumnToVoucherDetailsToVoucherDetailsTable extends Migration
     {
         Schema::table('voucher_details', function (Blueprint $table) {
             DB::statement('ALTER TABLE `voucher_details` CHANGE `account_type` `account_type` ENUM(\'debit\',\'credit\',\'\') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;');
-            $table->integer('transaction_type')->nullable()->after('account_type')->comment('1=original,0=dummy');
+            $table->boolean('transaction_type')->default(true)->after('account_type')->comment('1=original,0=dummy');
         });
     }
 

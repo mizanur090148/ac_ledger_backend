@@ -2,6 +2,7 @@
 
 namespace App\Requests;
 
+use App\Repositories\Interfaces\VoucherRepositoryInterface;
 use Closure;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\UniqueCheck;
@@ -14,9 +15,10 @@ class VoucherRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(VoucherRepositoryInterface $repository)
     {
-        return true;      
+        $voucher = $repository->find($this->route()->parameter('id'));
+        return $voucher->status ? false : true;
     }
 
     /**
@@ -30,7 +32,7 @@ class VoucherRequest extends FormRequest
             'voucher_no' => [
                 'required',
                 'max:30',
-                new UniqueCheck(Voucher::class)
+                // new UniqueCheck(Voucher::class)
             ],
             'voucher_type' => [
                 'required',
@@ -125,6 +127,12 @@ class VoucherRequest extends FormRequest
                         $failed("Invalid account type");
                     }
                 }
+            ];
+        }
+        if ($this->pay_mode == BANK) {
+            $input['bank_name'] = [
+                'required',
+                'max:100'
             ];
         }
         return $input;

@@ -75,4 +75,5 @@ Route::group([
     Route::delete('/vouchers/{id}', [VoucherController::class, 'delete']);
     Route::get('/vouchers/dropdown-data', [VoucherController::class, 'dropdownData']);
     Route::get('/vouchers/new-voucher-no/{voucherType}', [VoucherController::class, 'newVoucherNo']);
+    Route::get('/vouchers/approve/{id}', [VoucherController::class, 'approve']);
 });

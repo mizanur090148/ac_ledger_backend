@@ -84,4 +84,10 @@ class VoucherRepository extends BaseRepository implements VoucherRepositoryInter
             ->orderByDesc('id')
             ->first();
     }
+
+    public function approveVoucher($id)
+    {
+        $voucher = $this->find($id);
+        return $voucher->update(['status' => ACTIVE]);
+    }
 }

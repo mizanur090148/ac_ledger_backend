@@ -15,7 +15,7 @@ class CreateVoucherDetailsTable extends Migration
     {
         Schema::create('voucher_details', function (Blueprint $table) {
             $table->id();
-            $table->enum('account_type', ['debit','credit'])->default('debit');
+            $table->enum('account_type', ['debit','credit'])->nullable();
             $table->unsignedBigInteger('account_head')->nullable();
             $table->unsignedBigInteger('voucher_id');
             $table->unsignedBigInteger('debit_to')->nullable();

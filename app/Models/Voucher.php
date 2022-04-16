@@ -35,19 +35,21 @@ class Voucher extends Model
         'message_to_accountant',
         'message_to_management',
         'message_for_audit',
+        'status',
         'created_by',
         'updated_by',
         'deleted_by'
     ];
 
     protected $appends = [
-        'total_amount',
         'voucher_type_name',
         'company_name',
         'branch_name',
         'pay_mode',
         'chart_of_account_title',
-        'created_date_time'
+        'created_date_time',
+        'total_fc_amount',
+        'total_local_amount',
     ];
 
     protected $dates = [
@@ -66,7 +68,7 @@ class Voucher extends Model
      */
     public function getPayModeAttribute()
     {
-        return ucfirst($this->attributes['pay_mode']);
+        return isset($this->attributes['pay_mode']) ? ucfirst($this->attributes['pay_mode']) : '';
     }
     /**
      * @return mixed
@@ -103,7 +105,20 @@ class Voucher extends Model
     /**
      * @return mixed
      */
-    public function getTotalAmountAttribute()
+    public function getTotalFcAmountAttribute()
+    {
+        if ($this->voucher_type == 0 || $this->voucher_type == 1) {
+            $result = $this->voucherDetails->where('transaction_type', 1)->sum('fc_amount');
+        } else {
+            $result = $this->voucherDetails->sum('fc_amount');
+        }
+        return $result;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTotalLocalAmountAttribute()
     {
         if ($this->voucher_type == 0 || $this->voucher_type == 1) {
             $result = $this->voucherDetails->where('transaction_type', 1)->sum('local_amount');
@@ -144,6 +159,4 @@ class Voucher extends Model
     {
         return $this->hasMany(VoucherDetail::class)->where('transaction_type', 1);
     }
-
-
 }
