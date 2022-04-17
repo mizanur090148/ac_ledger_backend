@@ -15,6 +15,7 @@ class ChartOfAccount extends Model
 
     protected $fillable = [
         'title',
+        'ac_code',
         'parent_id',
         'type',
         'last_child',
@@ -32,7 +33,7 @@ class ChartOfAccount extends Model
      */
     public function chartOfAccounts()
     {
-        return $this->hasMany(self::class, 'parent_id', 'id')->select('id','parent','type','title as text');
+        return $this->hasMany(self::class, 'parent_id', 'id')->select('id','parent','type','ac_code','title as text');
     }
 
     /**
@@ -41,7 +42,7 @@ class ChartOfAccount extends Model
     public function nodes()
     {
         return $this->hasMany(self::class, 'parent_id')
-            ->select('id','parent_id','type','title as text','last_child')
-            ->with('nodes:id,parent_id,type,last_child,title as text');
+            ->select('id','parent_id','type','ac_code','title as text','last_child')
+            ->with('nodes:id,parent_id,type,ac_code,last_child,title as text');
     }
 }

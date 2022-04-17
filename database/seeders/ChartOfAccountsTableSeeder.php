@@ -26,52 +26,55 @@ class ChartOfAccountsTableSeeder extends Seeder
     {
         $expenses = [
             [
-                'title' => 'Expense',
-                'parent'=> null,
-                'child' => [
+                'title'     => 'Expense',
+                'parent'    => null,
+                'ac_code'   => null,
+                'child'     => [
                     [
-                        'title' => 'Direct Expense',
-                        'parent'=> 'Expense',
-                        'child' => [
+                        'title'     => 'Cost Of Good Sold',
+                        'parent'    => 'Expense',
+                        'ac_code'   => '51-0000',
+                        'child'     => [
                             [
-                                'title' => 'Purchase',
-                                'parent'=> 'Direct Expense'
-                            ],[
-                                'title' => 'Wages & Salary',
-                                'parent'=> 'Direct Expense'
+                                'title'     => 'Direct Wages',
+                                'parent'    => 'Cost Of Good Sold',
+                                'ac_code'   => '51-0001'
                             ]
                         ]
                     ],
                     [
                         'title' => 'Administrative Expense',
                         'parent'=> 'Expense',
+                        'ac_code'   => '52-0000',
                         'child' => [
                             [
-                                'title' => 'Salary & Allowance',
-                                'parent'=> 'Administrative Expense'
-                            ],[
-                                'title' => 'Utility Expense',
-                                'parent'=> 'Administrative Expense'
+                                'title'     => 'Salary & Wages',
+                                'parent'    => 'Administrative Expense',
+                                'ac_code'   => '52-0001'
                             ]
                         ]
                     ],
                     [
-                        'title' => 'Selling & Marketing Expense',
-                        'parent'=> 'Expense',
-                        'child' => [
+                        'title'     => 'Selling & Marketing Expenses',
+                        'parent'    => 'Expense',
+                        'ac_code'   => '53-0000',
+                        'child'     => [
                             [
-                                'title' => 'Sales Commission',
-                                'parent'=> 'Selling & Marketing Expense'
+                                'title'     => 'Sales Commission',
+                                'parent'    => 'Selling & Marketing Expenses',
+                                'ac_code'   => '53-0000'
                             ]
                         ]
                     ],
                     [
-                        'title' => 'Financial Expense',
-                        'parent'=> 'Expense',
-                        'child' => [
+                        'title'     => 'Financial Expenses',
+                        'parent'    => 'Expense',
+                        'ac_code'   => '54-0000',
+                        'child'     => [
                             [
-                                'title' => 'Bank Charge',
-                                'parent'=> 'Financial Expense'
+                                'title' => 'Bank Charges',
+                                'parent'=> 'Financial Expenses',
+                                'ac_code'   => '54-0001'
                             ]
                         ]
                     ]
@@ -87,25 +90,47 @@ class ChartOfAccountsTableSeeder extends Seeder
     {
         $incomes = [
             [
-                'title' => 'Income',
-                'parent'=> null,
-                'child' => [
+                'title'     => 'Income',
+                'parent'    => null,
+                'ac_code'   => null,
+                'child'     => [
                     [
-                        'title' => 'Direct Income',
-                        'parent'=> 'Income',
-                        'child' => [
+                        'title'     => 'Revenue',
+                        'parent'    => 'Income',
+                        'ac_code'   => '41-0000',
+                        'child'     => [
                             [
-                                'title' => 'Sales',
-                                'parent'=> 'Direct Income'
+                                'title'     => 'Sales Revenue',
+                                'parent'    => 'Revenue',
+                                'ac_code'   => '41-0001',
                             ],[
-                                'title' => 'Service Charge',
-                                'parent'=> 'Direct Income'
+                                'title'     => 'Service Income',
+                                'parent'    => 'Revenue',
+                                'ac_code'   => '41-0002',
                             ]
                         ]
                     ],
                     [
-                        'title' => 'Indirect Income',
-                        'parent'=> 'Income'
+                        'title'     => 'Others income',
+                        'parent'    => 'Income',
+                        'ac_code'   => '42-0000',
+                        'child'     => [
+                            [
+                                'title'     => 'Foreign Exchange Gain /(Loss)',
+                                'parent'    => 'Others income',
+                                'ac_code'   => '42-0001',
+                            ],
+                            [
+                                'title'     => 'Unadjusted Gain /(Loss)',
+                                'parent'    => 'Others income',
+                                'ac_code'   => '42-0002',
+                            ],
+                            [
+                                'title'     => 'Discount Received',
+                                'parent'    => 'Others income',
+                                'ac_code'   => '42-0003',
+                            ]
+                        ]
                     ]
                 ]
             ]
@@ -119,42 +144,32 @@ class ChartOfAccountsTableSeeder extends Seeder
     {
         $liabilities = [
             [
-                'title' => 'Liability',
-                'parent'=> null,
-                'child' => [
+                'title'     => 'Liability',
+                'parent'    => null,
+                'ac_code'   => null,
+                'child'     => [
                     [
-                        'title' => 'Non-current Liability',
-                        'parent'=> 'Liability'
+                        'title'     => 'Non-Current Liabilities',
+                        'parent'    => 'Liability',
+                        'ac_code'   => '31-0000',
+                        'child'     => [
+                            [
+                                'title'     => 'Long Term Loan',
+                                'parent'    => 'Non-Current Liabilities',
+                                'ac_code'   => '31-0001'
+                            ],
+                        ]
                     ],
                     [
-                        'title' => 'Current Liability',
-                        'parent'=> 'Liability',
-                        'child' => [
+                        'title'     => 'Current Liabilities',
+                        'parent'    => 'Liability',
+                        'ac_code'   => '32-0000',
+                        'child'     => [
                             [
-                                'title' => 'Payable',
-                                'parent'=> 'Current Liability',
-                                'child' => [
-                                    [
-                                        'title' => 'Account Payable',
-                                        'parent'=> 'Payable'
-                                    ],[
-                                        'title' => 'Others Payable',
-                                        'parent'=> 'Payable'
-                                    ]
-                                ]
-                            ],[
-                                'title' => 'Tax & Vat Out Standing',
-                                'parent'=> 'Current Liability',
-                                'child' => [
-                                    [
-                                        'title' => 'Tax Outstanding',
-                                        'parent'=> 'Tax & Vat Out Standing'
-                                    ],[
-                                        'title' => 'VAT Outstanding',
-                                        'parent'=> 'Tax & Vat Out Standing'
-                                    ]
-                                ]
-                            ]
+                                'title'     => 'Short Term Loan',
+                                'parent'    => 'Current Liabilities',
+                                'ac_code'   => '32-0001'
+                            ],
                         ]
                     ],
                 ]
@@ -170,23 +185,33 @@ class ChartOfAccountsTableSeeder extends Seeder
     {
         $equities = [
             [
-                'title' => 'Equity',
-                'parent'=> null,
-                'child' => [
+                'title'     => 'Equity',
+                'parent'    => null,
+                'ac_code'   => null,
+                'child'     => [
                     [
-                        'title' => 'Share Money',
-                        'parent'=> 'Equity'
+                        'title'     => 'Share Capital',
+                        'parent'    => 'Equity',
+                        'ac_code'   => '21-0000'
                     ],
                     [
-                        'title' => 'Retaing Earning',
-                        'parent'=> 'Equity'
+                        'title'     => 'Share Money Deposit',
+                        'parent'    => 'Equity',
+                        'ac_code'   => '21-0001'
                     ],
                     [
-                        'title' => 'Opening Retain Earnings',
-                        'parent'=> 'Equity'
+                        'title'     => 'Retained Earnings',
+                        'parent'    => 'Equity',
+                        'ac_code'   => '21-0002',
+                        'child'     => [
+                            [
+                                'title'     => 'Opening Retained Earnings',
+                                'parent'    => 'Retained Earnings',
+                                'ac_code'   => '21-0003'
+                            ]
+                        ]
                     ]
                 ]
-
             ]
         ];
         foreach ($equities as $key => $equity) {
@@ -198,45 +223,44 @@ class ChartOfAccountsTableSeeder extends Seeder
     {
         $assets = [
             [
-                'title' => 'Assets',
-                'parent'=> null,
-                'child' => [
+                'title'     => 'Assets',
+                'parent'    => null,
+                'ac_code'   => null,
+                'child'     => [
                     [
-                        'title' => 'Non-Current Assets',
-                        'parent'=> 'Assets',
+                        'title'     => 'Non-Current Assets',
+                        'parent'    => 'Assets',
+                        'ac_code'   => '11-0000',
+                        'child'     => [
+                            [
+                                'title'     => 'Property Plant & Equipments',
+                                'parent'    => 'Non-Current Assets',
+                                'ac_code'   => '11-0001'
+                            ]
+                        ]
                     ],
                     [
-                        'title' => 'Current Assets',
-                        'parent'=> 'Assets',
+                        'title'     => 'Current Assets',
+                        'parent'    => 'Assets',
+                        'ac_code'   => '12-0000',
                         'child' => [
                             [
-                                'title' => 'Receivable',
-                                'parent'=> 'Current Assets',
-                                'child' => [
+                                'title'     => 'Cash & Cash Equivalents',
+                                'parent'    => 'Current Assets',
+                                'ac_code'   => '12-0001',
+                                'child'     => [
                                     [
-                                        'title' => 'Account Receivable',
-                                        'parent'=> 'Receivable'
+                                        'title'     => 'Cash In Hand',
+                                        'parent'    => 'Cash & Cash Equivalents',
+                                        'ac_code'   => '12-0002',
                                     ],[
-                                        'title' => 'Others Receivable',
-                                        'parent'=> 'Receivable'
+                                        'title'     => 'Cash At Bank',
+                                        'parent'    => 'Cash & Cash Equivalents',
+                                        'ac_code'   => '12-0003',
                                     ]
                                 ]
-                            ],
-                            [
-                                'title' => 'Cash & Bank Balance',
-                                'parent'=> 'Current Assets',
-                                'child' => [
-                                    [
-                                        'title' => 'Cash At hand',
-                                        'parent'=> 'Cash & Bank Balance'
-                                    ],[
-                                        'title' => 'Cash At Bank',
-                                        'parent'=> 'Cash & Bank Balance'
-                                    ]
-                                ]
-                            ],
+                            ]
                         ]
-
                     ]
                 ]
             ],
@@ -253,8 +277,9 @@ class ChartOfAccountsTableSeeder extends Seeder
         }
         $node = array_shift($queue);
         $input = [
-            'title' => $node['title'],
-            'type'  => $type,
+            'title'     => $node['title'],
+            'ac_code'   => $node['ac_code'],
+            'type'      => $type,
             'parent_id' => ChartOfAccount::whereTitle($node['parent'])->first()->id ?? null
         ];
         $chartOfAccount = ChartOfAccount::create($input);

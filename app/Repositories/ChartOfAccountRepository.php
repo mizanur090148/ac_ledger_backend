@@ -27,7 +27,7 @@ class ChartOfAccountRepository extends BaseRepository implements ChartOfAccountR
     public function chartOfAccountList(array $where)
     {
         $result = ChartOfAccount::with('nodes')
-            ->select('id','parent_id','type','title as text')
+            ->select('id','parent_id','ac_code','type','title as text')
             ->where($where);
 
         $assetQuery = clone $result;
