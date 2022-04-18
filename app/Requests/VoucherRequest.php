@@ -17,7 +17,11 @@ class VoucherRequest extends FormRequest
      */
     public function authorize(VoucherRepositoryInterface $repository)
     {
-        $voucher = $repository->find($this->route()->parameter('id'));
+        $voucherId = $this->route()->parameter('id');
+        if (!$voucherId) {
+            return true;
+        }
+        $voucher = $repository->find($voucherId);
         return $voucher->status ? false : true;
     }
 
