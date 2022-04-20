@@ -47,6 +47,7 @@ class Voucher extends Model
         'branch_name',
         'pay_mode',
         'chart_of_account_title',
+        'ac_code',
         'created_date_time',
         'total_fc_amount',
         'total_local_amount',
@@ -100,6 +101,14 @@ class Voucher extends Model
     public function getChartOfAccountTitleAttribute()
     {
         return $this->chartOfAccount->title ?? '';
+    }
+
+    /**
+     * @return string
+     */
+    public function getAcCodeAttribute()
+    {
+        return $this->chartOfAccount->ac_code ?? '';
     }
 
     /**

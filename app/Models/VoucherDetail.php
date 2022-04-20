@@ -33,7 +33,8 @@ class VoucherDetail extends Model
 
     protected $appends = [
         'local_amount',
-        'chart_of_account_title'
+        'chart_of_account_title',
+        'ac_code',
     ];
 
     protected $dates = [
@@ -45,7 +46,37 @@ class VoucherDetail extends Model
      */
     public function getChartOfAccountTitleAttribute()
     {
-        return $this->chartOfAccount->title ?? '';
+        if ($this->debit_to) {
+            $title = $this->chartOfAccount->title;
+        } elseif ($this->credit_to) {
+            $title = $this->chartOfAccountCredit->title;
+        } else {
+            $title = $this->chartOfAccountContraAndJournal->title;
+        }
+        return $title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAcCodeAttribute()
+    {
+        if ($this->debit_to) {
+            $acCode = $this->chartOfAccount->ac_code;
+        } elseif ($this->credit_to) {
+            $acCode = $this->chartOfAccountCredit->ac_code;
+        } else {
+            $acCode = $this->chartOfAccountContraAndJournal->ac_code;
+        }
+        return $acCode;
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function voucher()
+    {
+        return $this->belongsTo(Voucher::class, 'voucher_id');
     }
 
     /**
@@ -77,7 +108,23 @@ class VoucherDetail extends Model
      */
     public function chartOfAccount()
     {
-        return $this->belongsTo(ChartOfAccount::class, 'debit_to');
+        return $this->belongsTo(ChartOfAccount::class, 'debit_to')->withDefault();
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function chartOfAccountCredit()
+    {
+        return $this->belongsTo(ChartOfAccount::class, 'credit_to')->withDefault();
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function chartOfAccountContraAndJournal()
+    {
+        return $this->belongsTo(ChartOfAccount::class, 'account_head')->withDefault();
     }
 
 }

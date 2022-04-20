@@ -38,7 +38,7 @@ class DropdownService
     public function chartOfAccountDropdownData($modelName, $payMode)
     {
         if ($payMode == 'cash') {
-            $title = 'Cash At Hand';
+            $title = 'Cash In Hand';
         } elseif ($payMode == 'bank') {
             $title = 'Cash At Bank';
         }
@@ -109,7 +109,7 @@ class DropdownService
     {
         $cashAtHandOrBankIds = [];
         if ($type == 'debit_or_credit' || $type == 'contra') {
-            $cashAtHandOrBankIds = (new $modelName)->whereIn('title', ['Cash At Hand','Cash At Bank'])->pluck('id')->all();
+            $cashAtHandOrBankIds = (new $modelName)->whereIn('title', ['Cash In Hand','Cash At Bank'])->pluck('id')->all();
         }
         return (new $modelName)->with('nodes')
             ->select('id','parent_id','type','last_child','title as text')

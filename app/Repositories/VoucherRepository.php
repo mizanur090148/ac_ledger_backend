@@ -22,11 +22,13 @@ class VoucherRepository extends BaseRepository implements VoucherRepositoryInter
     {
         return $this->getModel()
             ->with([
-                'voucherDetails',
-                'voucherDetails.chartOfAccount:id,title',
                 'company:id,name,address_one',
                 'branch:id,name',
-                'chartOfAccount:id,title'
+                'voucherDetails',
+                'chartOfAccount:id,title,ac_code',
+                'voucherDetails.chartOfAccount:id,title,ac_code',
+                'voucherDetails.chartOfAccountCredit:id,title,ac_code',
+                'voucherDetails.chartOfAccountContraAndJournal:id,title,ac_code',
             ])->when($voucherType, function ($query, $voucherType) {
                 $query->where('voucher_type', $voucherType);
             })
